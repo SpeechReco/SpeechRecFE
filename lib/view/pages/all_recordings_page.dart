@@ -15,12 +15,20 @@ class _AllRecordingsState extends State<AllRecordingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("My recordings"),
-      ),
-      body: RecordingList(
-        recordings: DataService.getMockRecords(),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text("My recordings"),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: RecordingList(
+                recordings: DataService.getMockRecords(),
+              ),
+            ),
+            ElevatedButton(onPressed: () {
+              Navigator.of(context).pop();
+            }, child: const Text("Back"))
+          ],
+        ));
   }
 }

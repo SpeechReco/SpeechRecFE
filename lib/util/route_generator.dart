@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:speech_rec_fe/view/pages/main_page.dart';
+import 'package:speech_rec_fe/model/analysis.dart';
+import 'package:speech_rec_fe/view/pages/add_recording_page.dart';
+import 'package:speech_rec_fe/view/pages/add_transcript_page.dart';
 import 'package:speech_rec_fe/view/pages/all_recordings_page.dart';
+import 'package:speech_rec_fe/view/pages/main_page.dart';
 import 'package:speech_rec_fe/view/pages/recording_page.dart';
 
 import '../model/recording.dart';
+import '../view/pages/transcript_page.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -12,7 +16,7 @@ class RouteGenerator {
       case '/':
         return MaterialPageRoute(builder: (_) => const MainPage());
       case '/add-recording':
-        return MaterialPageRoute(builder: (_) => const MainPage());
+        return MaterialPageRoute(builder: (_) => const AddRecordingPage());
       case '/all-recordings':
         return MaterialPageRoute(builder: (_) => const AllRecordingsPage());
       case '/recording':
@@ -21,9 +25,15 @@ class RouteGenerator {
               builder: (_) => RecordingPage(recording: args));
         }
       case '/transcript':
-        return MaterialPageRoute(builder: (_) => const MainPage());
+        if (args is Analysis) {
+          return MaterialPageRoute(
+              builder: (_) => TranscriptPage(analysis: args));
+        }
       case '/add-transcript':
-        return MaterialPageRoute(builder: (_) => const MainPage());
+        if (args is String) {
+          return MaterialPageRoute(
+              builder: (_) => AddTranscriptPage(recordingURI: args));
+        }
       case '/login':
         return MaterialPageRoute(builder: (_) => const MainPage());
       case '/register':

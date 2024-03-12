@@ -17,7 +17,9 @@ class MainPage extends StatelessWidget {
               },
               child: const Text("My recordings")),
           ElevatedButton(
-              onPressed: () {}, child: const Text("Make a recording")),
+              onPressed: () {
+                Navigator.of(context).pushNamed("/add-recording");
+              }, child: const Text("Make a recording")),
         ],
       ),
     );
