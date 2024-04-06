@@ -1,47 +1,46 @@
+import 'dart:convert';
+
 import '../model/analysis.dart';
 import '../model/recording.dart';
+import 'package:http/http.dart' as http;
 
 class DataService {
-  static List<Recording> getMockRecords() {
-    return [
-      Recording(1, 1001, 'Sample Recording 1',
-          'https://example.com/recording1.mp3', DateTime.now()),
-      Recording(2, 1002, 'Sample Recording 2',
-          'https://example.com/recording2.mp3', DateTime.now()),
-      Recording(3, 1003, 'Sample Recording 3',
-          'https://example.com/recording3.mp3', DateTime.now()),
-    ];
+  static String httpBase = "http://localhost:8080/audios/1";
+  static Uri url = Uri.parse(httpBase);
+
+  static Future<List<Recording>> getRecords() async {
+    var response = await http.get(url);
+    Iterable l = json.decode(response.body);
+    return List<Recording>.from(l.map((model)=> Recording.fromJson(model)));
   }
 
-  static List<Analysis> getMockAnalyses() {
-    return [
-      Analysis(
-        1,
-        101,
-        'Analysis 1',
-        201,
-        301,
-        DateTime.now(),
-        'Config 1',
-      ),
-      Analysis(
-        2,
-        102,
-        'Analysis 2',
-        202,
-        302,
-        DateTime.now(),
-        'Config 2',
-      ),
-      Analysis(
-        3,
-        103,
-        'Analysis 3',
-        203,
-        303,
-        DateTime.now(),
-        'Config 3',
-      ),
-    ];
+  static Future<bool> addRecord(List<int> audioBytes) async {
+    Recording recording =
+    Recording(4, 1, 'Sample Recording 4', "none", DateTime.now(), audioBytes);
+    try {
+      // Convert Recording object to JSON
+      var jsonData = recording.toJson();
+
+      // Send JSON data in the request body
+      var response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(jsonData),
+      );
+
+      // Check if the request was successful
+      if (response.statusCode == 200) {
+        // If successful, return the updated Recording object
+        return true;
+      } else {
+        // If unsuccessful, throw an exception or handle the error accordingly
+        throw Exception('Failed to add recording');
+      }
+    } catch (e) {
+      // Handle any exceptions that occur during the process
+      throw Exception('Error: $e');
+    }
   }
+
+
 }

@@ -31,5 +31,10 @@
             "type": "image/png",
             "purpose": "maskable"
         }
+    ],
+    "permissions": [
+        "microphone",
+        "storage",
+        "internet"
     ]
 }

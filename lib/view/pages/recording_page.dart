@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:speech_rec_fe/util/data_service.dart';
 
 import '../../model/recording.dart';
+import '../../util/mock_data_service.dart';
 import '../widgets/analysis_list.dart';
+import '../widgets/audioplayer.dart';
 
 class RecordingPage extends StatelessWidget {
   const RecordingPage({super.key, required this.recording});
@@ -16,13 +18,15 @@ class RecordingPage extends StatelessWidget {
       body: Column(
         children: [
           const Text("Info holder"),
-          const Text("Recording placeholder"),
+          AudioPlayerWidget(
+            currentAudio: recording.recordingURI,
+          ),
           Expanded(
             child: Column(
               children: [
                 Expanded(
                     child:
-                        AnalysisList(analyses: DataService.getMockAnalyses())),
+                        AnalysisList(analyses: MockDataService.getMockAnalyses())),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed("/add-transcript",
