@@ -26,6 +26,6 @@ class Recording {
     'title': title,
     'recordingURI': recordingURI,
     'creationDate': DateFormat('yyyy-MM-dd\'T\'HH:mm:ss').format(creationDate),
-    'audioBytes': base64.encode(audioBytes!),
+    'audioBytes': audioBytes!,
   };
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import '../model/analysis.dart';
 import '../model/recording.dart';
@@ -15,6 +16,7 @@ class DataService {
   }
 
   static Future<bool> addRecord(List<int> audioBytes) async {
+    print(audioBytes);
     Recording recording =
     Recording(4, 1, 'Sample Recording 4', "none", DateTime.now(), audioBytes);
     try {
@@ -40,6 +42,13 @@ class DataService {
       // Handle any exceptions that occur during the process
       throw Exception('Error: $e');
     }
+  }
+
+  static Future<Uint8List> getBytes(String mPath) async {
+    var response = await http.get(Uri.parse(mPath));
+    print(response.body);
+    print(response.bodyBytes);
+    return response.bodyBytes;
   }
 
 

@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:speech_rec_fe/util/data_service.dart';
 
 class AudioPlayerWidget extends StatefulWidget {
   const AudioPlayerWidget({super.key, required this.currentAudio});
@@ -24,8 +27,8 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   FlutterSoundPlayer? _mPlayer = FlutterSoundPlayer();
   FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
   bool _mPlayerIsInited = false;
-  bool _mRecorderIsInited = false;
-  bool _mplaybackReady = false;
+
+   late Uint8List _buffer;
 
   Future<void> openTheRecorder() async {
     if (!kIsWeb) {
@@ -38,7 +41,6 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     if (!await _mRecorder!.isEncoderSupported(_codec) && kIsWeb) {
       _codec = Codec.opusWebM;
       if (!await _mRecorder!.isEncoderSupported(_codec) && kIsWeb) {
-        _mRecorderIsInited = true;
         return;
       }
     }
@@ -61,7 +63,6 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       androidWillPauseWhenDucked: true,
     ));
 
-    _mRecorderIsInited = true;
   }
 
   @override
@@ -74,7 +75,6 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
 
     openTheRecorder().then((value) {
       setState(() {
-        _mRecorderIsInited = true;
       });
     });
     super.initState();
@@ -91,13 +91,12 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   }
 
   _AudioPlayerWidgetState(this._mPath);
-  void play() {
-    print("HERE:" + _mPath);
+  Future<void> play() async {
     assert(_mPlayerIsInited &&
         _mPlayer!.isStopped);
     _mPlayer!
         .startPlayer(
-        fromURI: _mPath,
+        fromDataBuffer: await DataService.getBytes(_mPath),
         //codec: kIsWeb ? Codec.opusWebM : Codec.aacADTS,
         whenFinished: () {
           setState(() {});
