@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -15,8 +14,7 @@ class AudioPlayerWidget extends StatefulWidget {
   final String currentAudio;
 
   @override
-  State<AudioPlayerWidget> createState() =>
-      _AudioPlayerWidgetState(currentAudio);
+  State<AudioPlayerWidget> createState() => _AudioPlayerWidgetState(currentAudio);
 }
 
 typedef _Fn = void Function();
@@ -28,7 +26,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   FlutterSoundRecorder? _mRecorder = FlutterSoundRecorder();
   bool _mPlayerIsInited = false;
 
-   late Uint8List _buffer;
+  late Uint8List _buffer;
 
   Future<void> openTheRecorder() async {
     if (!kIsWeb) {
@@ -62,7 +60,6 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       androidAudioFocusGainType: AndroidAudioFocusGainType.gain,
       androidWillPauseWhenDucked: true,
     ));
-
   }
 
   @override
@@ -74,8 +71,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     });
 
     openTheRecorder().then((value) {
-      setState(() {
-      });
+      setState(() {});
     });
     super.initState();
   }
@@ -91,13 +87,12 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   }
 
   _AudioPlayerWidgetState(this._mPath);
+
   Future<void> play() async {
-    assert(_mPlayerIsInited &&
-        _mPlayer!.isStopped);
+    assert(_mPlayerIsInited && _mPlayer!.isStopped);
     _mPlayer!
         .startPlayer(
         fromDataBuffer: await DataService.getBytes(_mPath),
-        //codec: kIsWeb ? Codec.opusWebM : Codec.aacADTS,
         whenFinished: () {
           setState(() {});
         })
@@ -116,35 +111,41 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     return _mPlayer!.isStopped ? play : stopPlayer;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(3),
-      padding: const EdgeInsets.all(3),
-      height: 80,
-      width: double.infinity,
-      alignment: Alignment.center,
+      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: const Color(0xFFFAF0E6),
         border: Border.all(
           color: Colors.indigo,
-          width: 3,
+          width: 2,
         ),
+        borderRadius: BorderRadius.circular(10),
       ),
-      child: Row(children: [
-        ElevatedButton(
-          onPressed: getPlaybackFn(),
-          //color: Colors.white,
-          //disabledColor: Colors.grey,
-          child: Text(_mPlayer!.isPlaying ? 'Stop' : 'Play'),
-        ),
-        const SizedBox(
-          width: 20,
-        ),
-        Text(
-            _mPlayer!.isPlaying ? 'Playback in progress' : 'Player is stopped'),
-      ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: getPlaybackFn(),
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              textStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            child: Text(_mPlayer!.isPlaying ? 'Stop' : 'Play'),
+          ),
+          const SizedBox(width: 20),
+          Text(
+            _mPlayer!.isPlaying ? 'Playback in progress' : 'Player is stopped',
+            style: const TextStyle(fontSize: 16),
+          ),
+        ],
+      ),
     );
   }
 }

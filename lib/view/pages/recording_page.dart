@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:speech_rec_fe/util/data_service.dart';
 
 import '../../model/recording.dart';
-import '../../util/mock_data_service.dart';
+import '../../util/data_service.dart';
+import '../widgets/add_transcript_widget.dart';
 import '../widgets/analysis_list.dart';
 import '../widgets/audioplayer.dart';
 
@@ -15,33 +15,73 @@ class RecordingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(recording.title)),
-      body: Column(
-        children: [
-          const Text("Info holder"),
-          AudioPlayerWidget(
-            currentAudio: recording.recordingURI,
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                Expanded(
-                    child:
-                        AnalysisList(analyses: MockDataService.getMockAnalyses())),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("/add-transcript",
-                          arguments: recording.recordingURI);
-                    },
-                    child: const Text("Add new analysis"))
-              ],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Text(
+              recording.title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-          ),
-          ElevatedButton(
+            const SizedBox(height: 20),
+            AudioPlayerWidget(
+              currentAudio: recording.recordingURI,
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: AnalysisList(
+                      analyses: DataService.getAnalyses(1, recording.id),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AddTranscriptWidget(recordingID: recording.id);
+                        },
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.blue,
+                      // Text color
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    child: const Text("Add New Analysis"),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text("Back"))
-        ],
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue,
+                // Text color
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              child: const Text("Back"),
+            ),
+          ],
+        ),
       ),
     );
   }
