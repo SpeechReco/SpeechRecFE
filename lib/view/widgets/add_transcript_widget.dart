@@ -14,7 +14,7 @@ class AddTranscriptWidget extends StatefulWidget {
 class _AddTranscriptWidgetState extends State<AddTranscriptWidget> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _numberController = TextEditingController();
-  String _selectedLanguage = 'English';
+  String _selectedLanguage = 'auto';
   bool _enableSummarization = false;
 
   @override
@@ -43,9 +43,9 @@ class _AddTranscriptWidgetState extends State<AddTranscriptWidget> {
             DropdownButtonFormField<String>(
               value: _selectedLanguage,
               items: const [
-                DropdownMenuItem(value: 'Auto', child: Text('Auto-detect')),
-                DropdownMenuItem(value: 'English', child: Text('English')),
-                DropdownMenuItem(value: 'Ukrainian', child: Text('Ukrainian')),
+                DropdownMenuItem(value: 'auto', child: Text('Auto-detect')),
+                DropdownMenuItem(value: 'en_us', child: Text('English')),
+                DropdownMenuItem(value: 'uk', child: Text('Ukrainian')),
               ],
               onChanged: (value) {
                 setState(() {
@@ -88,7 +88,7 @@ class _AddTranscriptWidgetState extends State<AddTranscriptWidget> {
                     String name = _nameController.text;
                     String language = _selectedLanguage;
                     int speakersNumber =
-                        int.tryParse(_numberController.text) ?? 1;
+                        int.tryParse(_numberController.text) ?? 0;
                     bool enableSummarization = _enableSummarization;
                     bool success = await DataService.addAnalysis(
                         name,

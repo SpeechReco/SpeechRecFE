@@ -7,6 +7,7 @@ import 'package:speech_rec_fe/view/pages/main_page.dart';
 import 'package:speech_rec_fe/view/pages/recording_page.dart';
 
 import '../model/recording.dart';
+import '../view/pages/generator_page.dart';
 import '../view/pages/transcript_page.dart';
 
 class RouteGenerator {
@@ -28,6 +29,11 @@ class RouteGenerator {
         if (args is Analysis) {
           return MaterialPageRoute(
               builder: (_) => TranscriptPage(analysis: args));
+        }
+      case '/gpt-generator':
+        if (args is Analysis) {
+          return MaterialPageRoute(
+              builder: (_) => GeneratorPage(analysis: args));
         }
       case '/login':
         return MaterialPageRoute(builder: (_) => const MainPage());

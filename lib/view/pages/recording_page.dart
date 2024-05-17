@@ -14,20 +14,22 @@ class RecordingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(recording.title)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            const SizedBox(height: 25),
             Text(
               recording.title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             AudioPlayerWidget(
               currentAudio: recording.recordingURI,
             ),
-            const SizedBox(height: 20),
             Expanded(
               child: Column(
                 children: [
@@ -37,48 +39,30 @@ class RecordingPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AddTranscriptWidget(recordingID: recording.id);
-                        },
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
-                      // Text color
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12),
-                      textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    child: const Text("Add New Analysis"),
-                  ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.blue,
-                // Text color
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                textStyle: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Back"),
                 ),
-              ),
-              child: const Text("Back"),
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AddTranscriptWidget(recordingID: recording.id);
+                      },
+                    );
+                  },
+                  child: const Text("Add New Analysis"),
+                ),
+              ],
             ),
           ],
         ),

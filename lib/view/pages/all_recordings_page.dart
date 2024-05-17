@@ -14,13 +14,19 @@ class _AllRecordingsState extends State<AllRecordingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("My Recordings"),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            const SizedBox(height: 25),
+            const Text(
+              "Your recordings",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24),
+            ),
+            const SizedBox(height: 15),
             Expanded(
               child: FutureBuilder<List<Recording>>(
                 future: DataService.getRecords(1),
@@ -63,24 +69,18 @@ class _AllRecordingsState extends State<AllRecordingsPage> {
                 },
               ),
             ),
+            const SizedBox(height: 15),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 24.0, vertical: 12.0),
-                  textStyle: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 100,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Back"),
                   ),
-                ),
-                child: const Text("Back"),
-              ),
-            ),
+                )),
           ],
         ),
       ),

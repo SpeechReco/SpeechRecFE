@@ -24,16 +24,16 @@ class UploadOptionsDialog extends StatelessWidget {
       title: Text(
         title,
         style: const TextStyle(
-          fontSize: 24,
+          fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: Color(0xFF333333),
+          color:  Color(0xFF4D4C7D),
         ),
       ),
       content: Text(
         content,
         style: const TextStyle(
           fontSize: 16,
-          color: Color(0xFF666666),
+          color: Color(0xFF4D4C7D),
         ),
       ),
       backgroundColor: const Color(0xFFF0F0F0),
@@ -45,36 +45,16 @@ class UploadOptionsDialog extends StatelessWidget {
           onPressed: () {
             yesFunc();
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF6200EA), // Button color
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 16,
-            ),
-          ),
           child: Text(
             yes,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
           ),
         ),
         ElevatedButton(
           onPressed: () {
             noFunc();
           },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF6200EA), // Button color
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 16,
-            ),
-          ),
           child: Text(
             no,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
           ),
         ),
       ],

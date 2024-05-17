@@ -29,7 +29,11 @@ class ConfidenceTextWidget extends StatelessWidget {
           WidgetSpan(
             child: Text(
               "Speaker $currentSpeaker: ",
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF4D4C7D),
+              ),
             ),
           ),
         );
@@ -42,6 +46,7 @@ class ConfidenceTextWidget extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
+              color: Color(0xFF4D4C7D),
             ),
           ),
         ));
@@ -54,6 +59,7 @@ class ConfidenceTextWidget extends StatelessWidget {
               "$confidenceWord ",
               style: const TextStyle(
                 fontSize: 16,
+                color: Color(0xFF4D4C7D),
               ),
             ),
           ),
@@ -70,7 +76,7 @@ class ConfidenceTextWidget extends StatelessWidget {
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                margin: const EdgeInsets.symmetric(horizontal:2, vertical: 2),
+                margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(111, 54, 132, 1),
                   borderRadius: BorderRadius.circular(8),
@@ -81,6 +87,7 @@ class ConfidenceTextWidget extends StatelessWidget {
                     color: color,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
+
                   ),
                 ),
               ),

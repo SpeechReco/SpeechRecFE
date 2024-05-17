@@ -11,68 +11,45 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFFF0F0F0), // Slight background color
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "Welcome to the Speech Recognition App",
-                style: TextStyle(
-                  fontFamily: 'Roboto', // Change font if needed
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF333333),
-                ),
-                textAlign: TextAlign.center,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "Welcome to the Speech Recognition App",
+              style: TextStyle(
+                fontFamily: 'Roboto', // Change font if needed
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFFFFFFF),
               ),
-              const SizedBox(height: 40),
-              ElevatedButton(
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 60),
+            SizedBox(
+              width: 180,
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed("/all-recordings");
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6200EA), // Button color
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
-                  ),
-                ),
                 child: const Text(
                   "My Recordings",
-                  style: TextStyle(
-                    fontFamily: 'Roboto', // Change font if needed
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
                 ),
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 180,
+              child: ElevatedButton(
                 onPressed: () {
                   _showUploadOptionsDialog(context);
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF6200EA), // Button color
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
-                  ),
-                ),
                 child: const Text(
                   "Make a Recording",
-                  style: TextStyle(
-                    fontFamily: 'Roboto', // Change font if needed
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
                 ),
               ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

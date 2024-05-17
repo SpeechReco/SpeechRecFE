@@ -14,7 +14,8 @@ class AudioPlayerWidget extends StatefulWidget {
   final String currentAudio;
 
   @override
-  State<AudioPlayerWidget> createState() => _AudioPlayerWidgetState(currentAudio);
+  State<AudioPlayerWidget> createState() =>
+      _AudioPlayerWidgetState(currentAudio);
 }
 
 typedef _Fn = void Function();
@@ -46,11 +47,11 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     await session.configure(AudioSessionConfiguration(
       avAudioSessionCategory: AVAudioSessionCategory.playAndRecord,
       avAudioSessionCategoryOptions:
-      AVAudioSessionCategoryOptions.allowBluetooth |
-      AVAudioSessionCategoryOptions.defaultToSpeaker,
+          AVAudioSessionCategoryOptions.allowBluetooth |
+              AVAudioSessionCategoryOptions.defaultToSpeaker,
       avAudioSessionMode: AVAudioSessionMode.spokenAudio,
       avAudioSessionRouteSharingPolicy:
-      AVAudioSessionRouteSharingPolicy.defaultPolicy,
+          AVAudioSessionRouteSharingPolicy.defaultPolicy,
       avAudioSessionSetActiveOptions: AVAudioSessionSetActiveOptions.none,
       androidAudioAttributes: const AndroidAudioAttributes(
         contentType: AndroidAudioContentType.speech,
@@ -92,10 +93,10 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     assert(_mPlayerIsInited && _mPlayer!.isStopped);
     _mPlayer!
         .startPlayer(
-        fromDataBuffer: await DataService.getBytes(_mPath),
-        whenFinished: () {
-          setState(() {});
-        })
+            fromDataBuffer: await DataService.getBytes(_mPath),
+            whenFinished: () {
+              setState(() {});
+            })
         .then((value) {
       setState(() {});
     });
@@ -114,35 +115,35 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFAF0E6),
-        border: Border.all(
-          color: Colors.indigo,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
+      width: 200,
+      alignment: Alignment.center,
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(
-            onPressed: getPlaybackFn(),
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              textStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+          SizedBox(
+            width: 80,
+            height: 40,
+            child: ElevatedButton(
+              onPressed: getPlaybackFn(),
+              style: ElevatedButton.styleFrom(
+                disabledBackgroundColor: Colors.white.withOpacity(0.3),
+                backgroundColor:
+                    _mPlayer!.isPlaying ? const Color(0xFFFA4B4B) : null,
+              ),
+              child: Text(
+                _mPlayer!.isPlaying ? 'Stop' : 'Play',
+                style: TextStyle(
+                  color: _mPlayer!.isPlaying ? Colors.white : null,
+                ),
               ),
             ),
-            child: Text(_mPlayer!.isPlaying ? 'Stop' : 'Play'),
           ),
-          const SizedBox(width: 20),
+          const SizedBox(height: 10),
           Text(
             _mPlayer!.isPlaying ? 'Playback in progress' : 'Player is stopped',
-            style: const TextStyle(fontSize: 16),
+            style: const TextStyle(color: Colors.white),
           ),
         ],
       ),

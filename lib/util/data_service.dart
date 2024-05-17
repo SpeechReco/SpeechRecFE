@@ -106,4 +106,36 @@ class DataService {
     }
   }
 
+  static Future<String> prompt(String analysisText, String prompt) async {
+    final url = Uri.parse('http://localhost:8080/analyses/1/1/1');
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final body = jsonEncode({
+      'text': analysisText,
+      'prompt': prompt,
+    });
+
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+
+        // Assuming the response has a field named 'response' containing the AI's response
+        return response.body;
+      } else {
+        throw Exception('Failed to get response from the server');
+      }
+    } catch (e) {
+      throw Exception('Error occurred: $e');
+    }
+  }
+
+  static Future<String> getText(String textURI) async {
+    var response = await http.get(Uri.parse(textURI));
+    return Transcript.fromJson(jsonDecode(response.body)).text;
+  }
+
 }
