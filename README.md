@@ -1,16 +1,8 @@
-# speech_rec_fe
+# Speech recognition app frontend part
+Front-end implemented as a mobile application, using Flutter/Dart stack
 
-A new Flutter project.
+Back-end implementation: https://github.com/SpeechReco/AnalyzerService
 
-## Getting Started
+## Demo
+https://github.com/SpeechReco/SpeechRecFE/assets/63159095/c936a71b-8f5a-4068-ac4c-9f86eea85d35
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
